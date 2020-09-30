@@ -3,9 +3,9 @@
 require 'vendor/autoload.php';
 require 'src/AvatarMatrix.php';
 
-$size = 5;
+$size = 4;
 $colors = ['red', 'blue'];
 
 $avatar = new AvatarMatrix($size, $colors);
 
-dump($avatar->genRandomMatrix());
+dump($avatar->getMatrix());
