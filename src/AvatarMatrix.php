@@ -24,6 +24,9 @@ class AvatarMatrix {
         $this->matrix = $this->genRandomMatrix();
     }
 
+    /**
+     * Génère une matrice aléatoire
+     */
     private function genRandomMatrix(): array
     {
         // Création d'un tableau vide
@@ -43,7 +46,7 @@ class AvatarMatrix {
             }    
         }
 
-        // On remet les indice du tableau dans l'ordre
+        // On remet les indices du tableau dans l'ordre
         ksort($matrix);
 
         return $matrix;
