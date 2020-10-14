@@ -11,7 +11,40 @@
         <h1>Avatar Factory</h1>
     </header>
     <main>
-        <?= $svg ?>
+        <div class="svg-container">
+            <?= $svg ?>
+        </div>
+
+
+        <!-- FORMULAIRE DE GENERATION DE L'AVATAR -->
+        <form action="index.php" method="get">
+            <fieldset>
+                <legend>Options de l'avatar</legend>
+                <div>
+                    <label for="number-of-colors">Nombre de couleurs</label>
+                    <select id="number-of-colors" name="number-of-colors">
+                        <?php for ($n = 2; $n < 5; $n++): ?>
+                            <option value="<?=$n?>" <?= $n == $numberOfColors ? 'selected' : '';?>><?=$n?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="size">Taille</label>
+                    <select id="size" name="size">
+                        <?php for ($n = 3; $n < 8; $n++): ?>
+                            <option value="<?=$n?>" <?= $n == $size ? 'selected' : '';?>><?=$n?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </fieldset>
+            <input type="submit" value="Générer">
+        </form>
+
+        <!-- FORMULAIRE D'ENREGISTREMENT DE L'AVATAR -->
+        <form action="save.php" method="post">
+            <input type="hidden" name="svg" value="<?=htmlspecialchars($svg)?>">
+            <input type="submit" value="Enregistrer">
+        </form>
     </main>
 </body>
 </html>
