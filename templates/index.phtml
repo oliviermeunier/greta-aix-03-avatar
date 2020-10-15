@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avatar</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/index.js" type="module" async></script>
 </head>
 <body>
     <header>
@@ -17,7 +18,7 @@
 
 
         <!-- FORMULAIRE DE GENERATION DE L'AVATAR -->
-        <form action="index.php" method="get">
+        <form id="generate-avatar-form" action="index.php" method="get">
             <fieldset>
                 <legend>Options de l'avatar</legend>
                 <div>
@@ -41,7 +42,7 @@
         </form>
 
         <!-- FORMULAIRE D'ENREGISTREMENT DE L'AVATAR -->
-        <form action="save.php" method="post">
+        <form id="save-avatar-form" action="save.php" method="post">
             <input type="hidden" name="svg" value="<?=htmlspecialchars($svg)?>">
             <input type="submit" value="Enregistrer">
         </form>
