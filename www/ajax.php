@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
     if(!empty($_GET)){
 
         $size = $_GET['size'];
-        $numberOfColors = $_GET['number-of-colors'];
+        $numberOfColors = $_GET['numberOfColors'];
     }
 
     // Création d'un tableau de couleurs aléatoires

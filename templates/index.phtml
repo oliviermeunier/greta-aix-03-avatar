@@ -12,12 +12,10 @@
         <h1>Avatar Factory</h1>
     </header>
     <main>
-        <div class="svg-container">
-            <?= $svg ?>
-        </div>
-
+        <div class="svg-container"></div>
 
         <!-- FORMULAIRE DE GENERATION DE L'AVATAR -->
+        <button id="previous-avatar">Previous</button>
         <form id="generate-avatar-form" action="index.php" method="get">
             <fieldset>
                 <legend>Options de l'avatar</legend>
@@ -40,10 +38,11 @@
             </fieldset>
             <input type="submit" value="Générer">
         </form>
+        <button id="next-avatar">Next</button>
 
         <!-- FORMULAIRE D'ENREGISTREMENT DE L'AVATAR -->
         <form id="save-avatar-form" action="save.php" method="post">
-            <input type="hidden" name="svg" value="<?=htmlspecialchars($svg)?>">
+            <input type="hidden" name="svg">
             <input type="submit" value="Enregistrer">
         </form>
     </main>
