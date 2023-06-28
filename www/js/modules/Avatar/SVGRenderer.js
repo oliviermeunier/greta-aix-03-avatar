@@ -1,13 +1,15 @@
 const SVGRenderer = {
     render(avatarMatrix) {
-        const size = avatarMatrix.getSize();
+        const size = avatarMatrix.getSize() * 10;
         const matrix = avatarMatrix.getMatrix();
     
-        let svg = `<svg viewBox="0 0 ${size} ${size}">` ;
+        let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">` ;
 
-        for (const [x, col] of matrix.entries()) {
-            for (const [y, color] of col.entries()) {
-                svg += `<rect x="${x}" y="${y}" width="1" height="1" fill="${color}" />`;
+        for (let [x, col] of matrix.entries()) {
+            x *= 10;
+            for (let [y, color] of col.entries()) {
+                y *= 10;
+                svg += `<rect x="${x}" y="${y}" width="10" height="10" fill="${color}" />`;
             }
         }
 

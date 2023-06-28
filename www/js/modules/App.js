@@ -5,6 +5,7 @@ import History from './History.js';
 import SVGRenderer from "./Avatar/SVGRenderer.js";
 import AvatarMatrix from './Avatar/AvatarMatrix.js';
 import { getRandomColors } from './ColorUtils.js';
+import ImageConverter from './ImageConverter.js';
 
 const STORAGE_KEY= 'avatar-history';
 const BASE_URL = 'http://localhost'; 
@@ -14,10 +15,13 @@ export default class App {
 
   constructor() {
     this.generateAvatarForm = document.getElementById('generate-avatar-form');
+    this.avatarContainer = document.querySelector('.svg-container');
     this.onSubmitGenerate = this.onSubmitGenerate.bind(this);
     this.onSubmitSave = this.onSubmitSave.bind(this);
+    this.copyAvatarSource = this.copyAvatarSource.bind(this);
     this.undo = this.undo.bind(this);
     this.redo = this.redo.bind(this);
+    this.downloadPng = this.downloadPng.bind(this);
     this.refreshAvatar = this.refreshAvatar.bind(this);
     this.urlBuilder = new URLBuilder(BASE_URL);
 
@@ -32,10 +36,34 @@ export default class App {
     document.getElementById('save-avatar-form').addEventListener('submit', this.onSubmitSave);
     document.getElementById('previous-avatar').addEventListener('click', this.undo);
     document.getElementById('next-avatar').addEventListener('click', this.redo);
+    document.getElementById('copy-svg-source').addEventListener('click', this.copyAvatarSource);
+    document.getElementById('download-png').addEventListener('click', this.downloadPng);
     
-    const avatarSvg = await this.generateAvatar();
     
-    this.refreshAvatar(avatarSvg);
+    const avatarSource = await this.generateAvatar();
+    
+    this.refreshAvatar(avatarSource);
+  }
+
+  async downloadPng(event) {
+
+    event.preventDefault();
+
+    const avatarSource = this.avatarContainer.innerHTML;
+    const link = document.createElement('a');
+    link.href = await ImageConverter.svg2png(avatarSource); 
+    link.download = 'avatar.png';
+    link.click();
+  }
+
+  copyAvatarSource() {
+    const avatarSrc = this.avatarContainer.innerHTML;
+
+    navigator.clipboard.writeText(avatarSrc).then(function() {
+      /* le presse-papier est correctement paramétré */
+    }, function() {
+      /* l'écriture dans le presse-papier a échoué */
+    });
   }
 
   /**
@@ -73,7 +101,7 @@ export default class App {
    * @param {string} avatarSrc 
    */
   refreshAvatar(avatarSrc) {
-    document.querySelector('.svg-container').innerHTML = avatarSrc;
+    this.avatarContainer.innerHTML = avatarSrc;
     document.querySelector('[name="svg"]').value = avatarSrc;
   }
 

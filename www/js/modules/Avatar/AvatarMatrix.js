@@ -10,11 +10,11 @@ export default class AvatarMatrix {
     generateMatrix() {
         const matrix = Array.from({length: this.size}, row => Array.from({length: this.size}, row => null));
 
-        for (let y = 0; y < this.size; y++) {
-            for (let x = 0; x < this.size; x++) {
-                const randomColorIndex = getRandomIntInclusive(0, this.colors.length - 1); 
-                matrix[x][y] = matrix[this.size -1 - x][y] = this.colors[randomColorIndex];
-            }
+        for (let i = 0; i < this.size * this.size; i++) {
+            const x = i % this.size;
+            const y = Math.floor(i / this.size);
+            const randomColorIndex = getRandomIntInclusive(0, this.colors.length - 1); 
+            matrix[x][y] = matrix[this.size -1 - x][y] = this.colors[randomColorIndex];
         }
 
         return matrix;
