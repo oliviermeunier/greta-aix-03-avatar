@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/index.js" type="module" async></script>
 </head>
+
 <body>
     <header>
         <h1>Avatar Factory</h1>
@@ -22,16 +24,16 @@
                 <div>
                     <label for="number-of-colors">Nombre de couleurs</label>
                     <select id="number-of-colors" name="number-of-colors">
-                        <?php for ($n = 2; $n < 5; $n++): ?>
-                            <option value="<?=$n?>" <?= $n == $numberOfColors ? 'selected' : '';?>><?=$n?></option>
+                        <?php for ($n = 2; $n < 5; $n++) : ?>
+                            <option value="<?= $n ?>"><?= $n ?></option>
                         <?php endfor; ?>
                     </select>
                 </div>
                 <div>
                     <label for="size">Taille</label>
                     <select id="size" name="size">
-                        <?php for ($n = 3; $n < 8; $n++): ?>
-                            <option value="<?=$n?>" <?= $n == $size ? 'selected' : '';?>><?=$n?></option>
+                        <?php for ($n = 3; $n < 8; $n++) : ?>
+                            <option value="<?= $n ?>"><?= $n ?></option>
                         <?php endfor; ?>
                     </select>
                 </div>
@@ -47,4 +49,5 @@
         </form>
     </main>
 </body>
+
 </html>

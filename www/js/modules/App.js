@@ -2,10 +2,13 @@ import { HTTPClient } from "./HttpClient.js";
 import { URLBuilder } from "./URLBuilder.js";
 import STORAGE from './STORAGE.js';
 import History from './History.js';
+import SVGRenderer from "./Avatar/SVGRenderer.js";
+import AvatarMatrix from './Avatar/AvatarMatrix.js';
+import { getRandomColors } from './ColorUtils.js';
 
 const STORAGE_KEY= 'avatar-history';
 const BASE_URL = 'http://localhost'; 
-const AJAX_PATH = 'avatar/www/ajax.php';
+const AJAX_PATH = 'avatar/avatar-php-scratch/www/ajax.php';
 
 export default class App {
 
@@ -19,7 +22,7 @@ export default class App {
     this.urlBuilder = new URLBuilder(BASE_URL);
 
     const initialStates = this.loadInitialStates();
-    this.history = new History(this.onGeneratorAvatar, this.refreshAvatar, initialStates);
+    this.history = new History(this.onGenerateAvatar, this.refreshAvatar, initialStates);
     
     this.init();
   }
@@ -61,7 +64,7 @@ export default class App {
    * 
    * @param {Memento[]} states 
    */
-  onSaveAvatar(states) {
+  onGenerateAvatar(states) {
     STORAGE.save(STORAGE_KEY, states);
   }
 
@@ -70,7 +73,8 @@ export default class App {
    * @param {string} avatarSrc 
    */
   refreshAvatar(avatarSrc) {
-      document.querySelector('.svg-container').innerHTML = avatarSrc;
+    document.querySelector('.svg-container').innerHTML = avatarSrc;
+    document.querySelector('[name="svg"]').value = avatarSrc;
   }
 
   /**
@@ -82,11 +86,9 @@ export default class App {
       const size = this.generateAvatarForm.elements.size.value;
       const numberOfColors = this.generateAvatarForm.elements['number-of-colors'].value;
 
-      // Build new Avatar URL
-      const url = this.urlBuilder.build(AJAX_PATH, {size, numberOfColors});
-
-      // Gte new Avatar SVG source from the server
-      const avatarSvg = await HTTPClient.get(url);
+      const colors = getRandomColors(numberOfColors); 
+      const avatarMatrix = new AvatarMatrix(size, colors);
+      const avatarSvg = SVGRenderer.render(avatarMatrix)
 
       // Save new Avatar into history
       this.history.saveState(avatarSvg);

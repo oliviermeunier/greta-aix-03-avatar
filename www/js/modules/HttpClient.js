@@ -26,8 +26,8 @@ HTTPClient.post = async (url, data = null) => {
 
     const response = await fetch(url, options);
     const parser = response.headers.get('content-type')?.includes('application/json') ? 'json' : 'text';
-    const data = await response[parser]();
-    return data;
+    const responseBody = await response[parser]();
+    return responseBody;
   } catch (error) {
     console.error('Erreur lors de la requête POST:', error);
     throw error;
